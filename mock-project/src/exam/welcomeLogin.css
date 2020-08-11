@@ -1,0 +1,32 @@
+.Box{
+   width:100%;
+   margin:0;
+   box-sizing: border-box;
+}
+.container-box{
+   padding:20px;
+}
+.panel{
+   width:30%;
+   height: 100px;
+   margin:0 auto;
+   border-radius: 5px;
+   background-color:gainsboro;
+   padding: 20px;
+}
+.panel-title{
+   text-align: center;
+}
+.btn-login{
+   display: flex;
+   justify-content: center;
+}
+.btnLogin{
+   padding:5px 14px;
+   background-color: FireBrick;
+   color:white;
+   border:1px solid white;
+   border-radius: 3px;
+   margin-right: 15px;
+   cursor: pointer;
+}
