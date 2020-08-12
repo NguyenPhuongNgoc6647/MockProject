@@ -25,44 +25,26 @@
 // }
 
 import React, { Component } from 'react'
-// import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
-// import { Redirect } from 'react-router-dom';
 import axios from 'axios'
 // import {Button} from 'antd'
 export class WelcomeLogin extends Component {
   constructor(props) {
     super(props)
   }
-  signup(res) {
-    const googleresponse = {
-      name: res.profileObj.name,
-      email: res.profileObj.email,
-      token: res.googleId,
-      Image: res.profileObj.imageUrl,
-      ProviderId: 'Google'
-    };
-    debugger;
-
-    axios.post('http://localhost:3000', googleresponse)
-      .then((result) => {
-        let responseJson = result;
-        sessionStorage.setItem("userData", JSON.stringify(result));
-        console.log('result: ',result)
-        console.log('responseJson: ', responseJson)
-        //   this.props.history.push('/Dashboard')
-      });
-  };
   render() {
     const responseGoogle = (response) => {
       var res = response.profileObj;
-      console.log(res);
+      console.log('dataUser: ',res);
       debugger;
       this.signup(response);
     }
-    console.log('response test: ',typeof(this.response))
-    console.log('res',this.res);
-    console.log('result: ', this.result)
+    axios.post('http://localhost:3000', this.googleresponse) 
+    .then((result) => {
+      // let responseJson = result;
+      sessionStorage.setItem("userData", JSON.stringify(result));
+      //   this.props.history.push('/Dashboard')
+    });
     return (
       <div className='Box'>
         <div className='container-box'>
