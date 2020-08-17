@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import WelcomeLogin from './exam/welcomeLogin';
+import { PageHeader, Descriptions, Menu, Grid } from 'antd'
+import {HeartOutlined} from '@ant-design/icons'
 // import {Route, Router, Switch } from 'react-router-dom';
 import {
   BrowserRouter as Router,
@@ -12,14 +14,30 @@ import Home from './exam/Home'
 
 class App extends React.Component {
   render() {
-    console.log('github')
     return (
-      <div>
+      <div className='col'>
         <Router>
-          <button> <Link to='./welcomelogin'>Login</Link></button>
+          <h3>Welcome to the homepage!</h3>
+          <div className='header-box col'>
+            <PageHeader className='col-12'>
+              <Menu mode='horizontal' className='menu--color col-12'>
+                <Menu.Item>BREEDS</Menu.Item>
+                <Menu.Item>RESOURCES</Menu.Item>
+              </Menu>
+            </PageHeader>
+            <div className='log'>
+                <HeartOutlined style = {{marginRight:'30px', fontSize:'20px'}}/>
+              <button className='btn-logout'>
+                <Link to='/app'>Logout</Link>
+              </button>
+              <button className='btn-logout'> 
+                <Link to='/exam/welcomelogin'>Login</Link>
+              </button>
+            </div>
+          </div>
           <Switch>
-            <Route path='/welcomelogin'>
-              <WelcomeLogin/>
+            <Route path='/exam/welcomelogin'>
+              <WelcomeLogin />
             </Route>
             <Route path='/exam/Home'>
               <Home />
