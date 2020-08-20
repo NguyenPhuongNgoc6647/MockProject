@@ -1,7 +1,10 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { PageHeader, Descriptions, Menu } from 'antd'
+// import { Link } from 'react-router-dom'
+// import { PageHeader, Descriptions, Menu } from 'antd'
+import {Button} from 'antd'
 import 'antd/dist/antd.css'
+import imgbanner from '../img/searchAndMatchHero.jpg'
+
 export default class Home extends React.Component {
    constructor(props) {
       super(props)
@@ -9,19 +12,19 @@ export default class Home extends React.Component {
    render() {
       return (
          <div className='container'>
-            {/* <h3>Welcome to the homepage!</h3>
-            <div className='header-box'>
-               <PageHeader>
-                  <Menu mode='horizontal' className='menu--color'>
-                     <Menu.Item>BREEDS</Menu.Item>
-                     <Menu.Item>RESOURCES</Menu.Item>
-                  </Menu>
-               </PageHeader>
-               <button className='btn-logout'>
-                  <Link to='/app'>Logout</Link>
-               </button>
-            </div> */}
-
+            <div className='homepage-banner'>
+               <div className='__banner--img'>
+                  <div className='box-imgbanner'>
+                     <img className='imgbanner' src={imgbanner} />
+                     <div className='title-banner'>
+                        <h3 style={{color:'white'}}>Find the Right Dog for You</h3>
+                        <p>Take our interactive new quiz to find the perfect dog to adopt!</p>
+                     </div>
+                     {/* <button>START DOG QUIZ</button> */}
+                     <Button shape='round' type='ghost'>START DOG QUIZ</Button>
+                  </div>
+               </div>
+            </div>
          </div>
       )
    }

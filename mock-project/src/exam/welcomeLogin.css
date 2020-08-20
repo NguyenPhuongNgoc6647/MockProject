@@ -1,42 +1,38 @@
 
 .container{
    width:100%;
-   padding:20px;
 }
 .panel-form{
-   width:30%;
-   margin:0 auto;
-   background-color:whitesmoke;
-   padding:20px;
+   width:90%;
+   top:10px;
+   margin:30px auto;
    border-radius: 3px;
 }
 .title-form-login h2{
    text-align: center;
+   color:#3b5998;
 }
 .box-btn{
    display: flex;
    justify-content: center;
-}
-.btnFacebook { 
-   /* width: 165px; */
-   height:45px;  
-   border-radius: 4px;
-   background: #3b5998;
-   color:white;
-   border:0px transparent;  
-   text-align: center;
-   margin:5px;
-   display: inline-block;
- }
- .btnGoogle { 
-   margin:5px;
-   /* width: 165px; */
+}  
+.btnFacebook, button.btnGoogle{
+   width: 200px;
    height:45px;
    border-radius: 4px;
    background: #db3236;
    color:white;
    border:0px transparent;
    text-align: center;
+}
+.btnFacebook { 
+   background: #3b5998;
+   float: right;
+   border:1px solid gray;
+   box-shadow: 0px 2px rgba(0, 0, 0, 0.24);
+ }
+ .btnGoogle { 
+   background: #db3236;
  }
 .header-box{
    background-color:lavender;
@@ -44,10 +40,47 @@
    justify-content: space-between;
 }
 .btn-logout{
-   margin:30px 30px 0 0;
+   margin:30px 10px 0 0;
    height: 30px;
 }
 .menu--color{
    background-color: lavender;
    font-weight: bold;
+}
+.container{
+   position: relative;
+}
+.box-imgbanner{
+   position: relative;
+   overflow: hidden;
+   height:450px;
+}
+.imgbanner{
+   width:100%;
+}
+.title-banner{
+   position: absolute;
+   top:70px;
+   left: 5%;
+   font-size:2rem;
+   color:white;  
+}
+.title-banner>p{
+   font-size:15px;
+}
+.box-imgbanner>Button{
+   position: absolute;
+   left: 5%;
+   top: 180px;
+   color:white;
+   font-weight: bold;
+   border:2px solid white;
+}
+.box-imgbanner>Button:hover{
+   background-color:white;
+   color:#6504b5;
+   border:2px solid white;
+}
+.log{
+   padding:10px;
 }
