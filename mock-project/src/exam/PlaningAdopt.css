@@ -1,0 +1,26 @@
+.textBold{
+   font-weight: bold;
+}
+.container-planing{
+   background-color:white;
+   width:100%;
+   padding:30px 0;
+}
+.title-planing>h2{
+   text-align: center;
+   width: 100%;
+   font-size:40px;
+   color:#6504b5;
+}
+.panel-planing{
+   width:90%;
+   margin:0 auto 30px;
+   text-align: center;
+   font-size:20px;
+}
+.panel-planing h4{
+   color: #004c81;
+}
+.btn-learn:hover{
+   box-shadow: 0 0 5px 2px #efefef;
+}

@@ -12,31 +12,45 @@ class FormLogin extends React.Component {
          visible: false,
       }
    }
+
+   responseGoogle = (response) => {
+    var res = response.profileObj;
+    localStorage.setItem('userInfo', JSON.stringify(res))
+    const userInfo = localStorage.getItem('userInfo')
+    console.log('userInfo: ', userInfo)
+    debugger;
+   }
+
    showModal = () => {
       this.setState({
          visible: true,
       })
    }
+
    handleSubmit = e => {
       console.log(e)
       this.setState({
          visible: false,
       })
    }
+
    handleCancel = e => {
       console.log(e)
       this.setState({
          visible: false,
       })
    }
+
    render() {
       return (
          <React.Fragment>
             <Button type='primary' onClick={this.showModal}>Login</Button>
-               <Modal title='Petfinder' style={{position:'relative'}}
-               visible={this.state.visible}
-               onOk={this.handleSubmit}
-               onCancel={this.handleCancel}>
+               <Modal 
+                  title='Petfinder' 
+                  style={{position:'relative'}}
+                  visible={this.state.visible}
+                  onOk={this.handleSubmit}
+                  onCancel={this.handleCancel}>
                <div className='panel-form'>
                   <div className='title-form-login'>
                      <h2>LOGIN FORM</h2>
@@ -94,16 +108,9 @@ class FormLogin extends React.Component {
                         textButton="&nbsp;&nbsp;Log In with Facebook"
                      />
                   </Form.Item>
-                     {/* <Form.Item>
-                        <Button type="primary" htmlType="submit" style={{ float: 'right' }}>
-                           Submit
-                        </Button>
-                     </Form.Item> */}
                   </Form>
                </div>
             </Modal>
-                     
-            
          </React.Fragment>
       )
    }

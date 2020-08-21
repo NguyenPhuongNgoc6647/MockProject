@@ -1,7 +1,8 @@
 import React from 'react'
 import { Menu, Dropdown } from 'antd'
+import {Link} from 'react-router-dom'
 import {DownOutlined} from '@ant-design/icons'
-class Drop extends React.Component {
+class PetAdoption extends React.Component {
    constructor(props) {
       super(props)
    }
@@ -9,13 +10,13 @@ class Drop extends React.Component {
       return (
          <Menu>
             <Menu.Item key='0'>
-               <a href='#'>MENU ITEM 1</a>
+               <Link to='#'>Dog Adoption</Link>
             </Menu.Item>
             <Menu.Item key='1'>
-               <a href='#'>MENU ITEM 2</a>
+               <Link to='#'>Cat Adoption</Link>
             </Menu.Item>
             <Menu.Item key='2'>
-               <a href='#'>MENU ITEM 3</a>
+               <Link to='#'>Adoption</Link>
             </Menu.Item>
          </Menu>
       )
@@ -24,10 +25,10 @@ class Drop extends React.Component {
       return (
          <Dropdown overlay={this.menu} trigger={['click']}>
             <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-               ABOUT PETFINDER <DownOutlined />
+               PETADOPTION <DownOutlined />
             </a>
          </Dropdown>
       )
    }
 }
-export default Drop
+export default PetAdoption
