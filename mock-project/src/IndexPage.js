@@ -16,7 +16,7 @@ import Search from './exam/Search'
 async function testApi() {
   return await axios.get('https://api.petfinder.com/v2/animals?type=dog&page=2', {
     headers: {
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJWMGhZVUkxY28ybWFkZ2piaDNob2tCcjE3V2pjdHR0ZnNMc2VGUlpiTVo2dUc1S3E5biIsImp0aSI6ImUxMGE2OGIyOWQ1N2FjMjFhYzlkMmE1NmNkMDM2ZTU1YTZhMzAxZjhjMTk1NjQ0NjYwZDNlNjdkYWVmNmQ3YjlmMzlkMWM4NDFmYjYxNjg1IiwiaWF0IjoxNTk4MDMwODc3LCJuYmYiOjE1OTgwMzA4NzcsImV4cCI6MTU5ODAzNDQ3Nywic3ViIjoiIiwic2NvcGVzIjpbXX0.XT5tcSY_f_StRZRTxdNv2ogijgRi5dttnDBnleeRVW-DmXV4zIR96OTCcilqIVqWn1f71YCNa7FADTxN5Sy_KdF_3Crsu1W0GPBoa9d8UhjNjKtf7D9FylQEVuEPU6Xvc2qT-5mmd8YNsd1vM7HMDNDH77w-1N1Bq5NrV1LM-pMX_4NW3vTGIiTXuNBb_vKdyIrvRHFYU-eHT2CpG4F2xPjG8cx6SNI8jQT_TGkYvD3YWiiwwG1rW7EGHnkR6JLSNDfqooc4oyFU0K-RiDIIhfUeSQix6k1ynvG6QwmZ2u4rca36yWkcxRNoOI7TRKN_xK6hF4iO2H3Y5ElWQPekIg'
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJWMGhZVUkxY28ybWFkZ2piaDNob2tCcjE3V2pjdHR0ZnNMc2VGUlpiTVo2dUc1S3E5biIsImp0aSI6ImY0ZmNmYjNjOTE0NGUyZjA3MjgyMGE2MjkzYTRkYjA2Yjg1MGYxYWYyYmU5OTc4NzhlYWQwN2QwYTJjNzE2YmEyNDAyMDY4ZWVlZDRmMTI5IiwiaWF0IjoxNTk4MDU4Nzg5LCJuYmYiOjE1OTgwNTg3ODksImV4cCI6MTU5ODA2MjM4OSwic3ViIjoiIiwic2NvcGVzIjpbXX0.X2R-7QhfPg8I4JmshbZ7kacoRxGoqofNflkhGoQDi9ozv70pIw6lBczi0abr4tZqHpyYQTMJyUbPHRdErqxG9FvEn5nbzpTI3CzNxvmSQAMQT6JbmqjE_qo-oJzIQKM0OAqfv9zeO_rXzfSrGo9LdgLgKpkElKFG_kTE0EGU7PXAg8ZeL4CPbIBSy53HiqlTJmk9In6QeB5lzWGPwzQhOqU6qf5cjN_tVIEo0Wbx65vG7FjqZIK-En64OHquN5vKJLvm924fcPT5jYnwOog6inULK0F9Kwglqrigo2fZJDlY4m3Qgxsiy6NJCotfvQtpBW5M85dn0yLWr1lLui5zNQ'
     }
   })
 }
@@ -28,8 +28,7 @@ class Index extends React.Component {
       data: {},
       animals: [],
       pagination: [],
-      searchField:'',
-    }
+      searchField:'',    }
   }
 
   logout = () =>{
@@ -73,7 +72,7 @@ class Index extends React.Component {
             </PageHeader>
             <div className='log'>
               {/* <SearchBar></SearchBar> */}
-              <Search valueInput ={this.state.searchField} handle = {(e) => this.handleSearchChange(e)}></Search>
+              <Search valueInput ={this.state.searchField}  handle = {(e) => this.handleSearchChange(e)}></Search>
               <HeartOutlined style={{ marginRight: '30px', fontSize: '20px' }} />
               <button className='btn-logout'>
                 <Link to='/index' onClick={this.logout()}>Logout</Link>

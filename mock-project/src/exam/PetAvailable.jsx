@@ -3,6 +3,7 @@ import { Grid, Row, Col } from 'antd'
 import './PetAvailable.css'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom"
 // import UserProvider from '../UserContext'
+import { HeartOutlined } from '@ant-design/icons'
 
 export default class PetAvailable extends React.Component {
    // static contextType = UserProvider
@@ -25,6 +26,7 @@ export default class PetAvailable extends React.Component {
                         <Col span={5} className='panel-animals' key={item.id}>
                         <Link to='./....'>
                            <div className='box-animals-item'>
+                              <HeartOutlined className='icon-wishlist'></HeartOutlined>
                               <div className='img-animals-item'>
                                  {/* {item.primary_photo_cropped.map(url =><img key={url.full} src={url.full} alt="pet image"/>
                                  )} */}
