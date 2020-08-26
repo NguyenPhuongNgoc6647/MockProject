@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
 import './App.css'
 import FormLogin from './exam/FormLogin'
-import {PageHeader, Menu} from 'antd'
+import { PageHeader, Menu } from 'antd'
 import { HeartOutlined } from '@ant-design/icons'
-import {BrowserRouter as Router,Switch,Route,Link} from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom"
 import Home from './exam/Home'
 import axios from "axios"
 import PetAvailable from './exam/PetAvailable'
 import Footer from './exam/Footer'
 import PlaningAdopt from './exam/PlaningAdopt'
 import Search from './exam/Search'
+import autoGetToken from './exam/autoGetToken'
 
-// const {Header, Content, Sider} = Layout
-
-async function testApi() {
-  return await axios.get('https://api.petfinder.com/v2/animals?type=dog&page=2', {
+async function testApi(token) {
+  return await axios.get('https://api.petfinder.com/v2/animals', {
     headers: {
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJWMGhZVUkxY28ybWFkZ2piaDNob2tCcjE3V2pjdHR0ZnNMc2VGUlpiTVo2dUc1S3E5biIsImp0aSI6ImY0ZmNmYjNjOTE0NGUyZjA3MjgyMGE2MjkzYTRkYjA2Yjg1MGYxYWYyYmU5OTc4NzhlYWQwN2QwYTJjNzE2YmEyNDAyMDY4ZWVlZDRmMTI5IiwiaWF0IjoxNTk4MDU4Nzg5LCJuYmYiOjE1OTgwNTg3ODksImV4cCI6MTU5ODA2MjM4OSwic3ViIjoiIiwic2NvcGVzIjpbXX0.X2R-7QhfPg8I4JmshbZ7kacoRxGoqofNflkhGoQDi9ozv70pIw6lBczi0abr4tZqHpyYQTMJyUbPHRdErqxG9FvEn5nbzpTI3CzNxvmSQAMQT6JbmqjE_qo-oJzIQKM0OAqfv9zeO_rXzfSrGo9LdgLgKpkElKFG_kTE0EGU7PXAg8ZeL4CPbIBSy53HiqlTJmk9In6QeB5lzWGPwzQhOqU6qf5cjN_tVIEo0Wbx65vG7FjqZIK-En64OHquN5vKJLvm924fcPT5jYnwOog6inULK0F9Kwglqrigo2fZJDlY4m3Qgxsiy6NJCotfvQtpBW5M85dn0yLWr1lLui5zNQ'
+      'Authorization': `Bearer ${token}`
     }
   })
 }
@@ -28,15 +27,16 @@ class Index extends React.Component {
       data: {},
       animals: [],
       pagination: [],
-      searchField:'',    }
+      searchField: '',
+      valueSearch: '',
+    }
   }
 
-  logout = () =>{
+  logout = () => {
     localStorage.clear()
   }
 
   handleSearchChange = (e) => {
-    // console.log('e.target.value test: ', e.target.value)
     this.setState({
       searchField: e.target.value,
     })
@@ -44,22 +44,33 @@ class Index extends React.Component {
 
   componentDidMount = async () => {
     try {
-      var api = await testApi()
-      // console.log('data api get function testApi: ', api.data)
-      var dataApi = api.data
+      const result = await autoGetToken()
+      let token = ''
+      if (result) {
+        token = result.data.access_token
+        // localStorage.setItem('access_token', JSON.stringify({
+        //   token,
+        //   expires_at: result.data.expires_at,
+        // }))
+      }
+      if (token) {
+        const api = await testApi(token)
+        const dataApi = api.data
+        console.log('debug-dataApi', dataApi)
+        if (dataApi !== null) {
+          this.setState({
+            data: dataApi,
+            animals: dataApi.animals,
+            pagination: dataApi.pagination,
+          })
+        }
+      }
     } catch (error) {
-      console.error(error);
+      console.error(error)
     }
-    this.setState({
-      data: dataApi,
-      animals: dataApi.animals,
-      pagination: dataApi.pagination,
-    })
-    // console.log('data: ', this.state.animals)
   }
-
+  
   render() {
-    console.log('data Animals: ', this.state.animals)
     return (
       <div className='col'>
         <Router>
@@ -71,9 +82,12 @@ class Index extends React.Component {
               </Menu>
             </PageHeader>
             <div className='log'>
-              {/* <SearchBar></SearchBar> */}
-              <Search valueInput ={this.state.searchField}  handle = {(e) => this.handleSearchChange(e)}></Search>
-              <HeartOutlined style={{ marginRight: '30px', fontSize: '20px' }} />
+              <Search
+                valueInput={this.state.searchField}
+                handle={(e) => this.handleSearchChange(e)} />
+              <Link to='./exam/wishlist'>
+                <HeartOutlined style={{ marginRight: '30px', fontSize: '20px' }} />
+              </Link>
               <button className='btn-logout'>
                 <Link to='/index' onClick={this.logout()}>Logout</Link>
               </button>
@@ -82,16 +96,16 @@ class Index extends React.Component {
           </div>
           <div className='content'>
             <Home />
-            <PetAvailable 
-            value={{
-              data: this.state.animals,
-              resultSearch: this.state.searchField,
-            }}
+            <PetAvailable
+              value={{
+                data: this.state.animals,
+                resultSearch: this.state.searchField,
+              }}
             ></PetAvailable>
             <PlaningAdopt></PlaningAdopt>
           </div>
           <div className='footer-box'>
-              <Footer />
+            <Footer />
           </div>
           <Switch>
             <Route path='/exam/welcomelogin'>

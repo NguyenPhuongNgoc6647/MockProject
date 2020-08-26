@@ -17,7 +17,7 @@ class Footer extends React.Component {
    }
    render() {
       return (
-         <div class='container-footer'>
+         <div className='container-footer'>
             <div className='footer'>
                <Row className='logo-footer'>
                   <h2 style={{ color: 'white' }}>PETFINDER</h2>

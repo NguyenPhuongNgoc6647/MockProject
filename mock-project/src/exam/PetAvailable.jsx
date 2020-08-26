@@ -2,16 +2,14 @@ import React from 'react'
 import { Grid, Row, Col } from 'antd'
 import './PetAvailable.css'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom"
-// import UserProvider from '../UserContext'
 import { HeartOutlined } from '@ant-design/icons'
 
 export default class PetAvailable extends React.Component {
-   // static contextType = UserProvider
    constructor(props) {
       super(props)
+      
    }
    render() {
-      // console.log('data pet: ', this.props.value.data)
       const { data } = this.props.value
 
       return (
@@ -35,8 +33,7 @@ export default class PetAvailable extends React.Component {
                               </div>
                               <div className='des-animal-item'>
                                  <h3>Name: {item.name}</h3>
-                                 <p>Gender: {item.gender}</p>
-                                 {/* <h3>helo</h3> */}
+                                 <p>Gender: {item.gender}, Type: {item.type}</p>
                               </div>
                            </div>
                         </Link>

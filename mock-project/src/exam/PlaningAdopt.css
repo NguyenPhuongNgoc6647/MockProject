@@ -21,6 +21,9 @@
 .panel-planing h4{
    color: #004c81;
 }
+.panel-planing p{
+   font-size:15px;
+}
 .btn-learn:hover{
    box-shadow: 0 0 5px 2px #efefef;
 }

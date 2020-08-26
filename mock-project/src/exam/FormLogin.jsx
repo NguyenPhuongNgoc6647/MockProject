@@ -1,9 +1,11 @@
 import React from 'react'
 import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login'
+// import FacebookLogin from 'react-facebook-login'
 import { Form, Input, Checkbox, Button, Modal} from 'antd'
 import 'antd/dist/antd.css';
 import './welcomeLogin.css'
+// import Facebook from './Facebook'
+import LoginFacebook from './LoginFacebook';
 
 class FormLogin extends React.Component {
    constructor(props) {
@@ -18,6 +20,9 @@ class FormLogin extends React.Component {
     localStorage.setItem('userInfo', JSON.stringify(res))
     const userInfo = localStorage.getItem('userInfo')
     console.log('userInfo: ', userInfo)
+    this.setState({
+       visible:false
+    })
     debugger;
    }
 
@@ -98,15 +103,16 @@ class FormLogin extends React.Component {
                         buttonText="Login with Google"
                         onSuccess={this.responseGoogle}
                         onFailure={this.responseGoogle}
-                        onClick={() => this.state.visible = false}
+                        // onClick={() => this.setHideModal()}
                         >
                         {/* <Link to='/exam/home' style={{ display: 'block' }}>Login with Google</Link> */}
                      </GoogleLogin>
-                     <FacebookLogin
+                     {/* <FacebookLogin
                         cssClass="btnFacebook"
                         icon={<i className="fa fa-facebook" style={{ marginLeft: '5px' }}></i>}
                         textButton="&nbsp;&nbsp;Log In with Facebook"
-                     />
+                     /> */}
+                     {/* <LoginFacebook /> */}
                   </Form.Item>
                   </Form>
                </div>

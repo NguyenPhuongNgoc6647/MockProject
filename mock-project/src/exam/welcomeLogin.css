@@ -12,11 +12,11 @@
    text-align: center;
    color:#3b5998;
 }
-.box-btn{
+/* .box-btn{
    display: flex;
    justify-content: center;
-}  
-.btnFacebook, button.btnGoogle{
+}   */
+.box-btn button.btnGoogle{
    width: 200px;
    height:45px;
    border-radius: 4px;
@@ -25,12 +25,12 @@
    border:0px transparent;
    text-align: center;
 }
-.btnFacebook { 
+/* .box-btn .btnFacebook { 
    background: #3b5998;
    float: right;
    border:1px solid gray;
    box-shadow: 0px 2px rgba(0, 0, 0, 0.24);
- }
+ } */
  .btnGoogle { 
    background: #db3236;
  }
