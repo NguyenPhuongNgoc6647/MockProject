@@ -2,6 +2,7 @@ import React from 'react'
 import GoogleLogin from 'react-google-login';
 // import FacebookLogin from 'react-facebook-login'
 import { Form, Input, Checkbox, Button, Modal} from 'antd'
+import { BrowserRouter as Router, Link } from "react-router-dom"
 import 'antd/dist/antd.css';
 import './welcomeLogin.css'
 // import Facebook from './Facebook'
@@ -105,7 +106,7 @@ class FormLogin extends React.Component {
                         onFailure={this.responseGoogle}
                         // onClick={() => this.setHideModal()}
                         >
-                        {/* <Link to='/exam/home' style={{ display: 'block' }}>Login with Google</Link> */}
+                        <Link to='/IndexPage' style={{ display: 'block' }}>Login with Google</Link>
                      </GoogleLogin>
                      {/* <FacebookLogin
                         cssClass="btnFacebook"

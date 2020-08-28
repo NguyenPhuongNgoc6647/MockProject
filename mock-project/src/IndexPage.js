@@ -11,8 +11,9 @@ import Footer from './exam/Footer'
 import PlaningAdopt from './exam/PlaningAdopt'
 import Search from './exam/Search'
 import autoGetToken from './exam/autoGetToken'
+import UserContext from './exam/userContext'
 
-async function testApi(token) {
+async function getDefaultAnimalsPage(token) {
   return await axios.get('https://api.petfinder.com/v2/animals', {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -27,19 +28,7 @@ class Index extends React.Component {
       data: {},
       animals: [],
       pagination: [],
-      searchField: '',
-      valueSearch: '',
     }
-  }
-
-  logout = () => {
-    localStorage.clear()
-  }
-
-  handleSearchChange = (e) => {
-    this.setState({
-      searchField: e.target.value,
-    })
   }
 
   componentDidMount = async () => {
@@ -48,20 +37,14 @@ class Index extends React.Component {
       let token = ''
       if (result) {
         token = result.data.access_token
-        // localStorage.setItem('access_token', JSON.stringify({
-        //   token,
-        //   expires_at: result.data.expires_at,
-        // }))
       }
       if (token) {
-        const api = await testApi(token)
-        const dataApi = api.data
-        console.log('debug-dataApi', dataApi)
-        if (dataApi !== null) {
+        const animalsPage = await getDefaultAnimalsPage(token)
+        if (animalsPage.data !== null) {
           this.setState({
-            data: dataApi,
-            animals: dataApi.animals,
-            pagination: dataApi.pagination,
+            data: animalsPage.data,
+            animals: animalsPage.data.animals,
+            pagination: animalsPage.data.pagination,
           })
         }
       }
@@ -69,44 +52,57 @@ class Index extends React.Component {
       console.error(error)
     }
   }
-  
+
+  logout = () => {
+    localStorage.clear()
+  }
+
+  setAnimals = (animals) => {
+    this.setState({ animals })
+  }
+
   render() {
+    console.log('this context animal: ', this.state.animals)
     return (
       <div className='col'>
         <Router>
-          <div className='header-box'>
-            <PageHeader>
-              <Menu mode='horizontal' className='menu--color' style={{ borderBottom: 'none' }}>
-                <Menu.Item>BREEDS</Menu.Item>
-                <Menu.Item>RESOURCES</Menu.Item>
-              </Menu>
-            </PageHeader>
-            <div className='log'>
-              <Search
-                valueInput={this.state.searchField}
-                handle={(e) => this.handleSearchChange(e)} />
-              <Link to='./exam/wishlist'>
-                <HeartOutlined style={{ marginRight: '30px', fontSize: '20px' }} />
-              </Link>
-              <button className='btn-logout'>
-                <Link to='/index' onClick={this.logout()}>Logout</Link>
-              </button>
-              <FormLogin />
+          <UserContext.Provider value={{
+            animals: this.state.animals,
+            setAnimals: this.setAnimals,
+          }}>
+            <div className='header-box'>
+              <PageHeader>
+                <Menu mode='horizontal' className='menu--color' style={{ borderBottom: 'none' }}>
+                  <Menu.Item>BREEDS</Menu.Item>
+                  <Menu.Item>RESOURCES</Menu.Item>
+                </Menu>
+              </PageHeader>
+              <div className='log'>
+                <Search result={this.props.data} />
+                <div className='log-btn'>
+                  <Link to='./exam/wishlist'>
+                    <HeartOutlined style={{ marginRight: '30px', fontSize: '20px' }} />
+                  </Link>
+                  <button className='btn-logout'>
+                    <Link to='/index' onClick={this.logout()}>Logout</Link>
+                  </button>
+                  <FormLogin />
+                </div>
+              </div>
             </div>
-          </div>
-          <div className='content'>
-            <Home />
-            <PetAvailable
-              value={{
-                data: this.state.animals,
-                resultSearch: this.state.searchField,
-              }}
-            ></PetAvailable>
-            <PlaningAdopt></PlaningAdopt>
-          </div>
-          <div className='footer-box'>
-            <Footer />
-          </div>
+            <div className='content'>
+              <Home />
+              <PetAvailable
+                value={{
+                  data: this.state.animals,
+                }}
+              />
+              <PlaningAdopt />
+            </div>
+            <div className='footer-box'>
+              <Footer />
+            </div>
+          </UserContext.Provider>
           <Switch>
             <Route path='/exam/welcomelogin'>
               <FormLogin />
@@ -116,7 +112,7 @@ class Index extends React.Component {
             </Route> */}
           </Switch>
         </Router>
-      </div>
+      </div >
     )
   }
 }

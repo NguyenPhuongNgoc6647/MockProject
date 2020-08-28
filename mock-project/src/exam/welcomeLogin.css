@@ -82,7 +82,7 @@
    border:2px solid white;
 }
 .log{
-   padding:10px;
+   padding:10px 50px 10px 10px;
 }
 
 
@@ -132,11 +132,13 @@
 .input-search{
    outline:0;
    border:0;
+   float: left;
    /* border:1px solid gray; */
 }
+
 .search-box{
    border:1px solid gray;
    background-color:white;
    float:right;
-   padding-right: 10px;
+   padding-right: 5px;
 }

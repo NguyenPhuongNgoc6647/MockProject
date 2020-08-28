@@ -3,15 +3,19 @@ import { Grid, Row, Col } from 'antd'
 import './PetAvailable.css'
 import { BrowserRouter as Router, Route, Link, Switch, Redirect } from "react-router-dom"
 import { HeartOutlined } from '@ant-design/icons'
+import UserContext from './userContext'
 
 export default class PetAvailable extends React.Component {
+   static contextType = UserContext
    constructor(props) {
       super(props)
       
    }
    render() {
+      console.log('debug-context', this.context.animals)
+      console.log('this context animal: ', this.context.animals)
       const { data } = this.props.value
-
+      console.log('Pet data: ', data)
       return (
          <div>
             <Router>
@@ -26,14 +30,13 @@ export default class PetAvailable extends React.Component {
                            <div className='box-animals-item'>
                               <HeartOutlined className='icon-wishlist'></HeartOutlined>
                               <div className='img-animals-item'>
-                                 {/* {item.primary_photo_cropped.map(url =><img key={url.full} src={url.full} alt="pet image"/>
-                                 )} */}
-                                 {/* {item.age} */}
-                                 <img src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48837638/1/?bust=1597978150&width=300" alt=""/>
+
+                                { <img src = "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48837638/1/?bust=1597978150&width=300"></img>}
+                                 {/* <img src="https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/48837638/1/?bust=1597978150&width=300" alt=""/> */}
                               </div>
                               <div className='des-animal-item'>
                                  <h3>Name: {item.name}</h3>
-                                 <p>Gender: {item.gender}, Type: {item.type}</p>
+                                 <p className='stylep'>Age: {item.age}<br/> Size: {item.size}<br/>Gender: {item.gender}<br/> Type: {item.type}</p>
                               </div>
                            </div>
                         </Link>

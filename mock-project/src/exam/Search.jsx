@@ -1,74 +1,101 @@
 import React from 'react'
-import {SearchOutlined} from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 import axios from "axios"
 import autoGetToken from './autoGetToken'
+import UserContext from './userContext'
 
 
-async function callApi() {
-   return await axios.get('https://api.petfinder.com/v2/${typeAnimals}', {
-     headers: {
-       'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJWMGhZVUkxY28ybWFkZ2piaDNob2tCcjE3V2pjdHR0ZnNMc2VGUlpiTVo2dUc1S3E5biIsImp0aSI6IjU2Nzc5ODEyODM1Mjc2YzMxYjBlY2I5YWQ3Nzg3N2MyOGM0MTllOGRjNmEwMjlmNzU2MzQwZWU4YjI1YjI4OTU2ZDliOTBjNTAyZTdkMWUyIiwiaWF0IjoxNTk4Mjg0ODkzLCJuYmYiOjE1OTgyODQ4OTMsImV4cCI6MTU5ODI4ODQ5Mywic3ViIjoiIiwic2NvcGVzIjpbXX0.n9mrP9tyQaEgoK2nFuP_xLaEgYs2NK73_u0p15X9Dt4W0ojS2pTP3VCk8v1vFOxLWUwNi_A4Q1hy-fjvYQTgEuj2StO6wxK72t_1SRqdrkGXYzOLnFewXyLjgDeXF6F_nkRh0Iul4TkE6MTnQCEn4q0KsH-GBHqoe5yqWbGhRw28hpsCBUtnZokMDF6sN0Luji_z1tGXzbblA8P9WVANTlNb0vnKMqOHxkWH7A7zE7rpOcH-DY6GmFCZgDEYU6k2IILG0UYDi7MzrqeMmnDCYOtdI9hBaw313K10zZUEzBo5FBar5JYbnmz0biekaHxwbBfSN8HS_35JFJMvIi9w-g'
-     }
+async function callApi(token) {
+   return await axios.get(`https://api.petfinder.com/v2/animals`, {
+      headers: {
+         'Authorization': `Bearer ${token}`
+      }
    })
- }
- 
+}
+
 class Search extends React.Component {
-   constructor(props){
+   static contextType = UserContext
+   constructor(props) {
       super(props)
+      this.state = {
+         valueInput: '',
+         pets: [],
+      }
+   }
+
+   handleChangeSearch = (e) => {
+      e.preventDefault()
       this.setState({
-         value:'',
-         dataResult:{},
-         dataAnimals:[],
-         pets:[],
-         pet: {},
+         valueInput: e.target.value
       })
+   }
+
+   handleClickSearch = async () => {
+      const test = await autoGetToken()
+      let token = ''
+      if (test) {
+         token = test.data.access_token
+      }
+      try {
+         const search = this.state.valueInput
+         console.log('search: ', search)
+         const api = await axios.get(`https://api.petfinder.com/v2/animals?type=${search}`, {
+            headers: {
+               'Authorization': `Bearer ${token}`
+            }
+         })
+         this.setState({
+            pets: api.data.animals,
+            valueInput: '',
+         })
+         this.context.setAnimals(this.state.pets)
+         console.log('context animals: ', this.context.animals)
+      } catch (error) {
+         this.setState({
+            valueInput: '',
+         })
+         alert('Không tìm thấy kết quả nào phù hợp!')
+         console.error(error)
+      }
    }
 
    componentDidMount = async () => {
       try {
-         var apiSearch = await callApi()
-         var dataResult = apiSearch.data
+         var apiSearch = await autoGetToken()
+         let token = ''
+         if (apiSearch) {
+            token = apiSearch.data.access_token
+            // console.log('token: ', token)
+         }
+         if (token) {
+            const dataSearch = await callApi(token)
+            if (dataSearch.data !== null) {
+               this.setState({
+                  pets: dataSearch.data.animals
+               })
+               
+            }
+         }
       } catch (error) {
          console.error(error)
       }
-      if(dataResult != null){
-         this.setState({
-            dataResult: dataResult,
-            dataAnimals: dataResult.animals,
-            // pets: filteredPets(),
-         })
-      }
-
-
-      // await autoGetToken()
-
-      // this.filteredPets = () =>{
-      //    if(this.state.dataAnimals != null){
-      //       this.state.dataAnimals.filter(pet =>{
-      //          return pet.type.toLowerCase().includes(this.state.inputValue.toLowerCase())
-      //       //   return  this.state.dataAnimals.map(pet =>{pet.type.toLowerCase().include(this.state.valueInput.toLowerCase())})
-      //       })
-      //    }
-      // }
-      // console.log('filter: ', this.state.pets)
-      // console.log('dataResult search: ',this.state.dataResult)
-      // console.log('dataAnimals search: ', this.state.dataAnimals)
    }
 
-   render(){
-      console.log('props có gì: ', this.props)
-      console.log('valueInput: ', this.props.valueInput)
-      return(
+   render() {
+      return (
          <div className='search-box'>
             <input
+               value={this.state.valueInput}
                placeholder='Enter pet type...'
-               value = {this.props.valueInput}
-               onChange={this.props.handle}
+               onChange={(e) => this.handleChangeSearch(e)}
+               // result ={this.state.pets}
                className='input-search'
-               type='text'/>
-            <SearchOutlined/>
-         </div>   
+               type='text'
+            />
+            <SearchOutlined onClick={(e) => this.handleClickSearch(e)} />
+         </div>
       )
    }
 }
+
 export default Search
